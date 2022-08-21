@@ -1,0 +1,25 @@
+{
+    "name": "secgin/phalcon-sms-plugin",
+    "description": "Phalcon Framework SMS Plugin",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "YG\\Phalcon\\Sms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Seçgin",
+            "email": "secginsanli@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-phalcon": "~4.1.2",
+        "secgin/netgsm-sms": "dev-Main"
+    },
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phalcon/ide-stubs": "^4.1"
+    }
+}
