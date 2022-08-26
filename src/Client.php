@@ -22,6 +22,9 @@ class Client implements ClientInterface, EventsAwareInterface
             case 'netgsm':
                 $this->client = new NetgsmClient($options, $defaultParams);
                 break;
+            case 'mock':
+                $this->client = new MockClient($options, $defaultParams);
+                break;
             default:
                 throw new \InvalidArgumentException('Invalid client class');
         }
