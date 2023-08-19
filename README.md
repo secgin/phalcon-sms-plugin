@@ -37,7 +37,11 @@ ClientProvider Di Container içine ejekte etme
 Sms Gönderme
 
 ```php
-    $container->get('sms')->send('5555555555', 'Deneme');
+    $container->get('sms')->send(Deneme', ['0000000000']);
+```
+
+```php
+    $container->get('sms')->send(Deneme', ['0000000000', '0000000000']);
 ```
 
 Çoklu Sms Gönderme
@@ -47,8 +51,8 @@ Sms Gönderme
         ->get('sms')
         ->sendMultiple(
             [
-                '5555555555' => 'Mesaj 1', 
-                '5555555556' => 'Mesaj 2'
+                '0000000000' => 'Mesaj 1', 
+                '0000000000' => 'Mesaj 2'
             ]
         );
 ```

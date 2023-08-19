@@ -34,10 +34,13 @@ class Client implements ClientInterface, EventsAwareInterface
     {
         $response = $this->client->send($message, $phones, $params);
 
-        if ($response->isSuccess)
-            $this->eventsManager->fire('sms:afterSend', $response);
-        else
-            $this->eventsManager->fire('sms:afterSendError', $response);
+        if ($this->eventsManager)
+        {
+            if ($response->isSuccess)
+                $this->eventsManager->fire('sms:afterSend', $response);
+            else
+                $this->eventsManager->fire('sms:afterSendError', $response);
+        }
 
         return $response;
     }
@@ -46,10 +49,13 @@ class Client implements ClientInterface, EventsAwareInterface
     {
         $response = $this->sendMultiple($phonesAndMessages, $params);
 
-        if ($response->isSuccess)
-            $this->eventsManager->fire('sms:afterSend', $response);
-        else
-            $this->eventsManager->fire('sms:afterSendError', $response);
+        if ($this->eventsManager)
+        {
+            if ($response->isSuccess)
+                $this->eventsManager->fire('sms:afterSend', $response);
+            else
+                $this->eventsManager->fire('sms:afterSendError', $response);
+        }
 
         return $response;
     }
