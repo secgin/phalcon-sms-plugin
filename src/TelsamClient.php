@@ -17,6 +17,12 @@ class TelsamClient implements ClientInterface
 
     public function __construct(array $options, array $defaultParams = [])
     {
+        if (isset($options['defaultMessageHeader']))
+        {
+            $options['sender'] = $options['defaultMessageHeader'];
+            unset($options['defaultMessageHeader']);
+        }
+
         $this->options = $options;
         $this->defaultParams = $defaultParams;
     }
@@ -33,7 +39,7 @@ class TelsamClient implements ClientInterface
             ? $apiClient->sendMultiSms(MultiSms::create($phones, $message))
             : $apiClient->sendSingleSms(SingleSms::create($phones[0], $message));
 
-        return new SendSmsResponse($result->getPkgId(), $result->getErrorMessage(), $result->isSuccess());
+        return new SendSmsResponse($result->getPkgId() ?? '', $result->getErrorMessage() ?? '', $result->isSuccess());
     }
 
     /**
@@ -46,6 +52,6 @@ class TelsamClient implements ClientInterface
 
         $result = $apiClient->sendDynamicSms(DynamicSms::create($phonesAndMessages));
 
-        return new SendSmsResponse($result->getPkgId(), $result->getErrorMessage(), $result->isSuccess());
+        return new SendSmsResponse($result->getPkgId() ?? '', $result->getErrorMessage() ?? '', $result->isSuccess());
     }
 }

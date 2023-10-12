@@ -26,7 +26,11 @@ class Client implements ClientInterface, EventsAwareInterface
         if (!$provider)
             throw new \InvalidArgumentException('Provider is required');
 
-        $this->client = new $provider($options, $defaultParams);
+        $providerClass = $this->providers[$provider] ?? null;
+        if (!$providerClass)
+            throw new \InvalidArgumentException('Provider is not valid');
+
+        $this->client = new $providerClass($options, $defaultParams);
     }
 
     public function send(string $message, array $phones, array $params = []): SendSmsResponse
