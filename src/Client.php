@@ -12,22 +12,21 @@ class Client implements ClientInterface, EventsAwareInterface
 
     private ?ManagerInterface $eventsManager = null;
 
+    private array $providers = [
+        'netgsm' => NetgsmClient::class,
+        'telsam' => TelsamClient::class,
+        'mock' => MockClient::class
+    ];
+
     public function __construct(array $options, array $defaultParams = [])
     {
-        $clientClass = $options['provider'] ?? null;
+        $provider = $options['provider'] ?? null;
         unset($options['provider']);
 
-        switch ($clientClass)
-        {
-            case 'netgsm':
-                $this->client = new NetgsmClient($options, $defaultParams);
-                break;
-            case 'mock':
-                $this->client = new MockClient($options, $defaultParams);
-                break;
-            default:
-                throw new \InvalidArgumentException('Invalid client class');
-        }
+        if (!$provider)
+            throw new \InvalidArgumentException('Provider is required');
+
+        $this->client = new $provider($options, $defaultParams);
     }
 
     public function send(string $message, array $phones, array $params = []): SendSmsResponse
