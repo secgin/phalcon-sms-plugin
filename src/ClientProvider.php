@@ -9,9 +9,14 @@ class ClientProvider implements ServiceProviderInterface
 {
     public function register(DiInterface $di): void
     {
-        $smsConfig = $di->getShared('config')->get('sms')->toArray();
+        $di->setShared('sms', function ()  {
 
-        $di->setShared('sms', function () use ($smsConfig) {
+            $smsConfig = $this->getShared('config');
+
+            $smsConfig = $smsConfig->has('sms')
+                ? $smsConfig->get('sms')->toArray()
+                : [];
+
             $options = [
                 'username' => $smsConfig['username'],
                 'password' => $smsConfig['password'],
