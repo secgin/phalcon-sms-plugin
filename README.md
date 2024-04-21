@@ -1,11 +1,11 @@
 # Phalcon Framework SMS Plugin
 
-Sms gönderimi için kullanılan farklı firmaların api larını ortak bir yapıda uygulayarak phalcon framework de kullanılmak
-için eklentidir.
+Farklı firmaların sms api larını phalcon framework ile kullanılması için eklenti.
 
 ## Desteklenen Sms Api ları
 
 - Netgsm
+- Telsam
 
 ## Kurulum
 
@@ -18,17 +18,29 @@ composer require secgin/phalcon-sms-plugin
 Config ayarlarını yapılandırınız.
 
 ```php
+    // Netgsm
     new \Phalcon\Config([
         'sms' => [
             'username' => '...',
             'password' => '...',
-            'defaultMessageHeader' => '...',
+            'header' => '...',
             'provider' => 'netgsm'
+        ]
+    ]);
+
+    // Telsam
+    new \Phalcon\Config([
+        'sms' => [
+            'username' => '...',
+            'password' => '...',
+            'sender' => '...',
+            'title' => '...',
+            'provider' => 'telsam'
         ]
     ]);
 ```
 
-ClientProvider Di Container içine ejekte etme
+Bağlılık kaydı
 
 ```php
     $container->register(new \Phalcon\Sms\ClientProvider());

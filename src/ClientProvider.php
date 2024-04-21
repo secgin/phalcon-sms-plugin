@@ -11,23 +11,13 @@ class ClientProvider implements ServiceProviderInterface
     {
         $di->setShared('sms', function ()  {
 
-            $smsConfig = $this->getShared('config');
+            $config = $this->getShared('config');
 
-            $smsConfig = $smsConfig->has('sms')
-                ? $smsConfig->get('sms')->toArray()
+            $smsConfig = $config->has('sms')
+                ? $config->get('sms')->toArray()
                 : [];
 
-            $options = [
-                'username' => $smsConfig['username'],
-                'password' => $smsConfig['password'],
-                'defaultMessageHeader' => $smsConfig['defaultMessageHeader'],
-                'provider' => $smsConfig['provider']
-            ];
-
-            unset($smsConfig['username'], $smsConfig['password'], $smsConfig['defaultMessageHeader'],
-                $smsConfig['provider']);
-
-            return new Client($options, $smsConfig);
+            return new Client($smsConfig);
         });
     }
 }

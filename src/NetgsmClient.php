@@ -9,13 +9,19 @@ class NetgsmClient implements ClientInterface
 {
     private SoapClient $sopClient;
 
-    public function __construct(array $options, array $defaultParams = [])
+    public function __construct(array $options)
     {
+        $username = $options['username'] ?? '';
+        $password = $options['password'] ?? '';
+        $header = $options['header'] ?? '';
+
+        unset($options['username'], $options['password'], $options['header']);
+
         $this->sopClient = new SoapClient(
-            $options['username'],
-            $options['password'],
-            $options['defaultMessageHeader'],
-            $defaultParams);
+            $username,
+            $password,
+            $header,
+            $options);
     }
 
     public function send(string $message, array $phones, array $params = []): SendSmsResponse

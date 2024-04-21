@@ -13,18 +13,13 @@ class TelsamClient implements ClientInterface
 {
     private array $options;
 
-    private array $defaultParams;
 
-    public function __construct(array $options, array $defaultParams = [])
+    public function __construct(array $options)
     {
-        if (isset($options['defaultMessageHeader']))
-        {
-            $options['sender'] = $options['defaultMessageHeader'];
-            unset($options['defaultMessageHeader']);
-        }
+        if (empty($options['apiUrl']))
+            $options['apiUrl'] = 'http://sms.telsam.com.tr:9587';
 
         $this->options = $options;
-        $this->defaultParams = $defaultParams;
     }
 
     /**
@@ -32,7 +27,7 @@ class TelsamClient implements ClientInterface
      */
     public function send(string $message, array $phones, array $params = []): SendSmsResponse
     {
-        $parameters = array_merge($this->defaultParams, $params, $this->options);
+        $parameters = array_merge($this->options, $params);
         $apiClient = new ApiClient(Config::create($parameters));
 
         $result = count($phones) > 1
@@ -47,7 +42,7 @@ class TelsamClient implements ClientInterface
      */
     public function sendMultiple(array $phonesAndMessages, array $params = []): SendSmsResponse
     {
-        $parameters = array_merge($this->defaultParams, $params, $this->options);
+        $parameters = array_merge($this->options, $params);
         $apiClient = new ApiClient(Config::create($parameters));
 
         $result = $apiClient->sendDynamicSms(DynamicSms::create($phonesAndMessages));

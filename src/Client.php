@@ -18,7 +18,7 @@ class Client implements ClientInterface, EventsAwareInterface
         'mock' => MockClient::class
     ];
 
-    public function __construct(array $options, array $defaultParams = [])
+    public function __construct(array $options)
     {
         $provider = $options['provider'] ?? null;
         unset($options['provider']);
@@ -30,7 +30,7 @@ class Client implements ClientInterface, EventsAwareInterface
         if (!$providerClass)
             throw new \InvalidArgumentException('Provider is not valid');
 
-        $this->client = new $providerClass($options, $defaultParams);
+        $this->client = new $providerClass($options);
     }
 
     public function send(string $message, array $phones, array $params = []): SendSmsResponse
