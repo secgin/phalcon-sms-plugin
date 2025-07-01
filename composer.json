@@ -16,7 +16,7 @@
     ],
     "require": {
         "ext-phalcon": "~4.1.2",
-        "secgin/netgsm-sms": "~1.0",
+        "secgin/netgsm-sms": "~2.0",
         "secgin/telsam-sms": "~1.0"
     },
     "minimum-stability": "stable",

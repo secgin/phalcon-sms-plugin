@@ -40,8 +40,6 @@ Config ayarlarını yapılandırınız.
     ]);
 ```
 
-Bağlılık kaydı
-
 ```php
     $container->register(new \Phalcon\Sms\ClientProvider());
 ```
